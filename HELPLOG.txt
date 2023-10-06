@@ -1,0 +1,15 @@
+CIS560 HW04 HELPLOG
+
+10/03: Used lecture slides on OpenGL Pipeline, Procedural Color, Surface, Reflection Models to help with the homework.
+
+10/04: Help during Office Hours with implementing Blinn-Phong Shader. Received help from Kevin
+
+10/05: Gaussian blur algorithm to help with implementation: https://blog.en.uwa4d.com/2022/08/11/screen-post-processing-effects-chapter-1-basic-algorithm-of-gaussian-blur-and-its-implementation/
+
+10/05: Noise function for deform courtesy of: https://gist.github.com/patriciogonzalezvivo/670c22f3966e662d2f83
+
+10/05: Used noise function (worley noise and random2) from lecture slides: https://docs.google.com/presentation/d/1gm7Vnr98wBbg2CiTyXIjJYYTKvAjvROk96_gUTMXao0/edit
+
+10/05: Used the following color palettes for deform and gradient fragment shaders: https://iquilezles.org/articles/palettes/
+
+10/06: Received help from Linda on Ed when calculating luminance for Bloom Shader.

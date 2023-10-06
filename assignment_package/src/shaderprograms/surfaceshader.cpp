@@ -4,7 +4,7 @@
 SurfaceShader::SurfaceShader(OpenGLContext *context)
     : ShaderProgram(context),
       attrPos(-1), attrNor(-1), attrUV(-1),
-      unifModel(-1), unifModelInvTr(-1), unifView(-1), unifProj(-1)
+    unifModel(-1), unifModelInvTr(-1), unifView(-1), unifProj(-1), unifCameraPos(-1)
 {}
 
 SurfaceShader::~SurfaceShader()
@@ -23,6 +23,8 @@ void SurfaceShader::setupMemberVars()
 
     unifSampler2D  = context->glGetUniformLocation(prog, "u_Texture");
     unifTime = context->glGetUniformLocation(prog, "u_Time");
+
+    unifCameraPos = context->glGetUniformLocation(prog, "u_CameraPos");
 
     context->printGLErrorLog();
 }
@@ -128,5 +130,17 @@ void SurfaceShader::setViewProjMatrix(const glm::mat4 &v, const glm::mat4 &p)
                        GL_FALSE,
                     // Pointer to the first element of the matrix
                        &p[0][0]);
+    }
+
+}
+
+// helper function to set camera position
+void SurfaceShader::setCameraPos(glm::vec3 cameraPos) {
+    useMe();
+
+    if(unifCameraPos != -1) {
+
+    context->glUniform3f(unifCameraPos, cameraPos.x, cameraPos.y, cameraPos.z);
+
     }
 }

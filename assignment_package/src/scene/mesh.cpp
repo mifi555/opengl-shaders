@@ -19,24 +19,128 @@ void Mesh::createCube(const char *textureFile, const char *bgTextureFile)
 
     // TODO: Create VBO data for positions, normals, UVs, and indices
 
-    std::vector<glm::vec4> pos {glm::vec4(-2, -2, 0, 1),
-                                glm::vec4(2, -2, 0, 1),
-                                glm::vec4(2, 2, 0, 1),
-                                glm::vec4(-2, 2, 0, 1)};
+//    std::vector<glm::vec4> pos {glm::vec4(-2, -2, 0, 1),
+//                                glm::vec4(2, -2, 0, 1),
+//                                glm::vec4(2, 2, 0, 1),
+//                                glm::vec4(-2, 2, 0, 1)};
 
-    std::vector<glm::vec4> nor {glm::vec4(0, 0, 1, 0),
-                                glm::vec4(0, 0, 1, 0),
-                                glm::vec4(0, 0, 1, 0),
-                                glm::vec4(0, 0, 1, 0)};
+    //Cube Vertex Buffers
 
-    std::vector<glm::vec2> uvs {glm::vec2(0, 0),
-                                glm::vec2(1, 0),
-                                glm::vec2(1, 1),
-                                glm::vec2(0, 1)};
+    std::vector<glm::vec4> pos {
+        //front
+        glm::vec4(-1, -1, 1, 1),
+        glm::vec4(1, -1, 1, 1),
+        glm::vec4(1, 1, 1, 1),
+        glm::vec4(-1, 1, 1, 1),
 
-    std::vector<GLuint> idx {0, 1, 2, 0, 2, 3};
 
-    count = 6; // TODO: Set "count" to the number of indices in your index VBO
+        //right face
+        glm::vec4( 1, -1,  1, 1),
+        glm::vec4( 1, -1, -1, 1),
+        glm::vec4( 1,  1, -1, 1),
+        glm::vec4( 1,  1,  1, 1),
+
+        //back face
+        glm::vec4( 1, -1, -1, 1),
+        glm::vec4(-1, -1, -1, 1),
+        glm::vec4(-1,  1, -1, 1),
+        glm::vec4( 1,  1, -1, 1),
+
+        //left face
+        glm::vec4(-1, -1, -1, 1),
+        glm::vec4(-1, -1,  1, 1),
+        glm::vec4(-1,  1,  1, 1),
+        glm::vec4(-1,  1, -1, 1),
+
+        //top face
+        glm::vec4(-1,  1,  1, 1),
+        glm::vec4( 1,  1,  1, 1),
+        glm::vec4( 1,  1, -1, 1),
+        glm::vec4(-1,  1, -1, 1),
+
+        //bottom face
+        glm::vec4(-1, -1, -1, 1),
+        glm::vec4( 1, -1, -1, 1),
+        glm::vec4( 1, -1,  1, 1),
+        glm::vec4(-1, -1,  1, 1)
+    };
+
+//    std::vector<glm::vec4> nor {glm::vec4(0, 0, 1, 0),
+//                                glm::vec4(0, 0, 1, 0),
+//                                glm::vec4(0, 0, 1, 0),
+//                                glm::vec4(0, 0, 1, 0)};
+
+    std::vector<glm::vec4> nor {
+        //front face (Z = 1)
+        glm::vec4( 0,  0,  1, 0),
+        glm::vec4( 0,  0,  1, 0),
+        glm::vec4( 0,  0,  1, 0),
+        glm::vec4( 0,  0,  1, 0),
+
+        //right face (X = 1)
+        glm::vec4( 1,  0,  0, 0),
+        glm::vec4( 1,  0,  0, 0),
+        glm::vec4( 1,  0,  0, 0),
+        glm::vec4( 1,  0,  0, 0),
+
+        //back face (Z = -1)
+        glm::vec4( 0,  0, -1, 0),
+        glm::vec4( 0,  0, -1, 0),
+        glm::vec4( 0,  0, -1, 0),
+        glm::vec4( 0,  0, -1, 0),
+
+        //left face (X = -1)
+        glm::vec4(-1,  0,  0, 0),
+        glm::vec4(-1,  0,  0, 0),
+        glm::vec4(-1,  0,  0, 0),
+        glm::vec4(-1,  0,  0, 0),
+
+        //top face (Y = 1)
+        glm::vec4( 0,  1,  0, 0),
+        glm::vec4( 0,  1,  0, 0),
+        glm::vec4( 0,  1,  0, 0),
+        glm::vec4( 0,  1,  0, 0),
+
+        //bottom face (Y = -1)
+        glm::vec4( 0, -1,  0, 0),
+        glm::vec4( 0, -1,  0, 0),
+        glm::vec4( 0, -1,  0, 0),
+        glm::vec4( 0, -1,  0, 0)
+    };
+
+//    std::vector<glm::vec2> uvs {glm::vec2(0, 0),
+//                                glm::vec2(1, 0),
+//                                glm::vec2(1, 1),
+//                                glm::vec2(0, 1)};
+
+    std::vector<glm::vec2> uvs(24, glm::vec2(0, 0));
+
+    for (int i = 0; i < 24; i+=4){
+        uvs[i] = glm::vec2(0, 0);
+        uvs[i + 1] = glm::vec2(1, 0);
+        uvs[i + 2] = glm::vec2(1, 1);
+        uvs[i + 3] = glm::vec2(0, 1);
+    }
+
+    //cube indices
+
+    //std::vector<GLuint> idx {0, 1, 2, 0, 2, 3};
+
+    std::vector<GLuint> idx;
+
+    for (int i = 0; i < 24; i += 4) {
+        idx.push_back(i + 0);
+        idx.push_back(i + 1);
+        idx.push_back(i + 2);
+        idx.push_back(i + 0);
+        idx.push_back(i + 2);
+        idx.push_back(i + 3);
+    }
+
+
+
+    //one face of a cube has 6 indexes, therefore a cube has 6*6 = 36 indexes
+    count = 36; // TODO: Set "count" to the number of indices in your index VBO
 
     generateIdx();
     context->glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, bufIdx);

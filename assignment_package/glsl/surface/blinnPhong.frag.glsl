@@ -22,5 +22,31 @@ layout(location = 0) out vec3 out_Col;//This is the final output color that you 
 void main()
 {
     // TODO Homework 4
-    out_Col = vec3(0, 0, 0);
+    //out_Col = vec3(0, 0, 0);
+
+    vec4 N = normalize(fs_Nor);
+    vec4 L = normalize(fs_LightVec);
+    vec4 V = normalize(fs_CameraPos - fs_Pos);
+
+
+    vec4 H = normalize((V + L) / 2);
+    float S = max(pow(dot(H, N), 100.0f), 0.0f);
+
+    // Material base color (before shading)
+    vec4 diffuseColor = texture(u_Texture, fs_UV);
+
+    // Calculate the diffuse term for Lambert shading
+    float diffuseTerm = dot(normalize(fs_Nor), normalize(fs_LightVec));
+    // Avoid negative lighting values
+    diffuseTerm = clamp(diffuseTerm, 0, 1);
+
+    float ambientTerm = 0.2;
+
+    float lightIntensity = diffuseTerm + ambientTerm + S;   //Add a small float value to the color multiplier
+                                                        //to simulate ambient lighting. This ensures that faces that are not
+                                                        //lit by our point light are not completely black.
+
+    // Compute final shaded color
+
+    out_Col = vec3(diffuseColor.rgb * lightIntensity);
 }
